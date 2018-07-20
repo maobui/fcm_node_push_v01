@@ -13,9 +13,16 @@
 
 <form method="post" action="/contact" novalidate>
 	<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="form-field <%= errors.server_key ? 'form-field-invalid' : '' %>">
+    <label for="server_key">Enter server key </label>
+    <input class="input" name="server_key" type="text" autofocus/>
+    <% if (errors.server_key) { %>
+      <div class="error"><%= errors.server_key.msg %></div>
+    <% } %>
+  </div>
   <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>">
     <label for="message">Message</label>
-    <textarea class="input" id="message" name="message" rows="4" autofocus><%= data.message %></textarea>
+    <textarea class="input" id="message" name="message" rows="4"><%= data.message %></textarea>
     <% if (errors.message) { %>
       <div class="error"><%= errors.message.msg %></div>
     <% } %>

@@ -1,6 +1,8 @@
 <% if (messages.success) { %>
   <div class="flash flash-success"><%= messages.success %></div>
-  <div class="flash flash-success"><%- JSON.stringify(messages.msg) %></div>
+  <div class="flash flash-success"><%= messages.msg %></div>
+<% } else if (messages.error) {%>
+  <div class="flash flash-error"><%= messages.error %></div>
 <% } %>
 
 <h1>Push notification FCM with forms in Node.js</h1>
