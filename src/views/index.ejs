@@ -1,5 +1,8 @@
 <% if (messages.success) { %>
   <div class="flash flash-success"><%= messages.success %></div>
+  <div class="flash flash-success"><%- JSON.stringify(messages.msg) %></div>
 <% } %>
 
-<h1>Working With Forms in Node.js</h1>
+<h1>Push notification FCM with forms in Node.js</h1>
+
+<a href="/contact" class="button">Contact</a>

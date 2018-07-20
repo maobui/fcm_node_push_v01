@@ -20,12 +20,21 @@
       <div class="error"><%= errors.message.msg %></div>
     <% } %>
   </div>
-  <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
-    <label for="email">Email</label>
-    <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
-    <% if (errors.email) { %>
-      <div class="error"><%= errors.email.msg %></div>
-    <% } %>
+  <!-- <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>"> -->
+    <!-- <label for="email">Email</label> -->
+    <!-- <input class="input" id="email" name="email" type="email" value="<%= data.email %>" /> -->
+    <!-- <% if (errors.email) { %> -->
+      <!-- <div class="error"><%= errors.email.msg %></div> -->
+    <!-- <% } %> -->
+  <!-- </div> -->
+  <div class="form-field">
+	<br><p>Choose which instructor to generate a test Squawk for. Use this for testing topic messages.</p><br>
+	<input name="topic" value="key_asser" type="radio"> Asser<br>
+	<input name="topic" value="key_cezanne" type="radio"> Cezanne<br>
+	<input name="topic" value="key_jlin" type="radio"> Jessica<br>
+	<input name="topic" value="key_lyla" type="radio"> Lyla<br>
+	<input name="topic" value="key_nikita" type="radio"> Nikita<br>
+	<input name="topic" value="key_random" checked="checked" type="radio"> Random<br>
   </div>
   <div class="form-actions">
     <button class="btn" type="submit">Send</button>
