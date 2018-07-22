@@ -11,7 +11,7 @@
   <% } %>
 </div>
 
-<form method="post" action="/contact" novalidate>
+<form method="post" action="/push" novalidate>
 	<input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <div class="form-field <%= errors.server_key ? 'form-field-invalid' : '' %>">
     <label for="server_key">Enter server key </label>

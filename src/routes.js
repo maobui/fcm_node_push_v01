@@ -18,8 +18,8 @@ router.get('/', (req, res) => {
 })
 
 
-router.get('/contact', (req, res) => {
-  res.render('contact', {
+router.get('/push', (req, res) => {
+  res.render('push', {
     data: {},
     errors: {},
 	csrfToken: req.csrfToken()
@@ -27,7 +27,7 @@ router.get('/contact', (req, res) => {
 })
 
 
-router.post('/contact', [
+router.post('/push', [
   check('server_key')
     .isLength({ min: 1 })
     .withMessage('Server key is required')
@@ -45,7 +45,7 @@ router.post('/contact', [
 ], (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return res.render('contact', {
+    return res.render('push', {
       data: req.body,
       errors: errors.mapped(),
       csrfToken: req.csrfToken()
