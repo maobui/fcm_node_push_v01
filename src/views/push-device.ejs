@@ -1,0 +1,40 @@
+<div class="form-header">
+  <% if (Object.keys(errors).length === 0) { %>
+    <h2>Send us a message (single device)</h2>
+  <% } else { %>
+    <h2 class="errors-heading">Oops, please correct the following:</h2>
+    <ul class="errors-list">
+      <% Object.values(errors).forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+</div>
+
+<form method="post" action="/push-device" novalidate>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="form-field <%= errors.server_key ? 'form-field-invalid' : '' %>">
+    <label for="server_key">Enter server key </label>
+    <input class="input" name="server_key" type="text" autofocus/>
+    <% if (errors.server_key) { %>
+      <div class="error"><%= errors.server_key.msg %></div>
+    <% } %>
+  </div>
+  <div class="form-field <%= errors.client_key ? 'form-field-invalid' : '' %>">
+    <label for="client_key">Enter the ID token of the phone </label>
+    <input class="input" name="client_key" type="text" />
+    <% if (errors.client_key) { %>
+      <div class="error"><%= errors.client_key.msg %></div>
+    <% } %>
+  </div>
+  <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>">
+    <label for="message">Message</label>
+    <textarea class="input" id="message" name="message" rows="4"><%= data.message %></textarea>
+    <% if (errors.message) { %>
+      <div class="error"><%= errors.message.msg %></div>
+    <% } %>
+  </div>
+  <div class="form-actions">
+    <button class="btn" type="submit">Send</button>
+  </div>
+</form>
