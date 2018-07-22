@@ -93,4 +93,68 @@ router.post('/contact', [
   
 })
 
+router.get('/push-device', (req, res) => {
+  res.render('push-device', {
+    data: {},
+    errors: {},
+	csrfToken: req.csrfToken()
+  })
+})
+
+router.post('/push-device', [
+  check('server_key')
+    .isLength({ min: 1 })
+    .withMessage('Server key is required')
+    .trim(),
+  check('client_key')
+    .isLength({ min: 1 })
+    .withMessage('The ID token of the phone is required')
+    .trim(),
+  check('message')
+    .isLength({ min: 1 })
+    .withMessage('Message is required')
+    .trim()
+], (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('push-device', {
+      data: req.body,
+      errors: errors.mapped(),
+      csrfToken: req.csrfToken()
+    })
+  }
+
+  const data = matchedData(req)
+  console.log('Sanitized:', data)
+  console.log('req.body.topic:', req.body.topic)
+  
+  // for FCM
+  const serverKey = data.server_key; //put your server key here
+  const fcm = new FCM(serverKey);
+  var topic_keys = Object.keys(topics);
+  var random_key = topic_keys[Math.floor(Math.random()*topic_keys.length)];
+  const msg = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
+		to: data.client_key, 	
+		data: {  //you can send only notification or only data(or include both)
+			author: topics[random_key],
+			message:	data.message,
+			date:	Date.now().toString(),
+			authorKey: random_key
+		}
+	};
+
+  fcm.send(msg, function(err, response){
+		if (err) {
+			console.log("Something has gone wrong!", err);
+			req.flash('error', 'Something has gone wrong!. Please check your server key.');
+		} else {
+			console.log("Successfully sent with response: ", response);
+			req.flash('success', 'Thanks for the message! I‘ll be in touch :).Please see the push notification message you sent.');
+			req.flash('msg', JSON.stringify(msg));
+		}
+		res.redirect('/')
+	});
+  
+})
+
 module.exports = router
